@@ -10,40 +10,44 @@ def process_pdfs():
     # Create output directory if it doesn't exist
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    # Get all PDF files
+    # Get all PDF files in the input directory
     pdf_files = list(input_dir.glob("*.pdf"))
     
-    for pdf_file in pdf_files:
-        # Create dummy JSON data
-        dummy_data = {
-            "title": "Understanding AI",
-            "outline": [
-                {
-                    "level": "H1",
-                    "text": "Introduction",
-                    "page": 1
-                },
-                {
-                    "level": "H2",
-                    "text": "What is AI?",
-                    "page": 2
-                },
-                {
-                    "level": "H3",
-                    "text": "History of AI",
-                    "page": 3
-                }
-            ]
-        }
-        
-        # Create output JSON file
-        output_file = output_dir / f"{pdf_file.stem}.json"
-        with open(output_file, "w") as f:
-            json.dump(dummy_data, f, indent=2)
-        
-        print(f"Processed {pdf_file.name} -> {output_file.name}")
+    # Define dummy data
+    dummy_data = {
+        "title": "Understanding AI",
+        "outline": [
+            {
+                "level": "H1",
+                "text": "Introduction",
+                "page": 1
+            },
+            {
+                "level": "H2",
+                "text": "What is AI?",
+                "page": 2
+            },
+            {
+                "level": "H3",
+                "text": "History of AI",
+                "page": 3
+            }
+        ]
+    }
+    
+    if not pdf_files:
+        print("No PDF files found in /app/input")
+    else:
+        print(f"Found {len(pdf_files)} PDF(s) in /app/input")
+
+    # Save the dummy.json file to /app/output
+    output_file = output_dir / "dummy.json"
+    with open(output_file, "w") as f:
+        json.dump(dummy_data, f, indent=2)
+    
+    print(f"Saved dummy.json to {output_file}")
 
 if __name__ == "__main__":
-    print("Starting processing pdfs")
+    print("Starting processing PDFs...")
     process_pdfs() 
-    print("completed processing pdfs")
+    print("Completed processing PDFs.")
